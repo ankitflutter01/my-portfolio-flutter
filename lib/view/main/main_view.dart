@@ -16,12 +16,24 @@ class MainView extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            kIsWeb && !Responsive.isLargeMobile(context) ? const SizedBox(height:defaultPadding*2,) : const SizedBox(height:defaultPadding/2,),
+            kIsWeb && !Responsive.isMobile(context) ? const SizedBox(height:defaultPadding*2,) : const SizedBox(height:defaultPadding/2,),
              const SizedBox(
                 height: 80,
                 child: TopNavigationBar(),
             ),
-            if(Responsive.isLargeMobile(context))  const Row(children: [Spacer(),NavigationButtonList(),Spacer()],),
+            if(Responsive.isMobile(context))
+              const SingleChildScrollView(
+              scrollDirection: Axis.horizontal, // or vertical if needed
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    NavigationButtonList(),
+                  ],
+                ),
+              ),
+            ),
             Expanded(
                 flex: 9,
                 child: PageView(

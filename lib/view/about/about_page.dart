@@ -17,13 +17,13 @@ class AboutPage extends StatelessWidget {
             if (Responsive.isLargeMobile(context)) const SizedBox(height: defaultPadding),
             const TitleText(prefix: 'About', title: 'Me'),
             const SizedBox(height: defaultPadding),
-            Expanded(
+            const Expanded(
               child: Responsive(
-                mobile: const AboutInfo(isMobile: true),
-                largeMobile: const AboutInfo(isMobile: true),
-                tablet: const AboutInfo(isMobile: false),
-                desktop: const AboutInfo(isMobile: false),
-                extraLargeScreen: const AboutInfo(isMobile: false),
+                mobile: AboutInfo(isMobile: true),
+                largeMobile: AboutInfo(isMobile: true),
+                tablet: AboutInfo(isMobile: false),
+                desktop: AboutInfo(isMobile: false),
+                extraLargeScreen: AboutInfo(isMobile: false),
               ),
             ),
           ],
@@ -49,13 +49,13 @@ class AboutInfo extends StatelessWidget {
         : Row(
       children: [
         Expanded(flex: 2, child: Column(children: _buildContent())),
-        const SizedBox(width: defaultPadding),
-        Expanded(
-          child: CircleAvatar(
-            radius: 80,
-            backgroundImage: AssetImage('assets/images/profile_img.jpg'), // Your profile image
-          ),
-        ),
+        // const SizedBox(width: defaultPadding),
+        // const Expanded(
+        //   child: CircleAvatar(
+        //     radius: 80,
+        //     backgroundImage: AssetImage('assets/images/profile_img.jpg'), // Your profile image
+        //   ),
+        // ),
       ],
     );
   }
@@ -64,7 +64,7 @@ class AboutInfo extends StatelessWidget {
     return [
       const Text(
         "Hi, I'm Ankit 👋",
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white,),
       ),
       const SizedBox(height: defaultPadding),
       const Text(
@@ -74,24 +74,20 @@ class AboutInfo extends StatelessWidget {
       ),
       const SizedBox(height: defaultPadding),
       const Align(
-        alignment: Alignment.centerLeft,
-        child: Text("Skills", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        alignment: Alignment.center,
+        child: Text("Skills", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: primaryColor)),
       ),
       const SizedBox(height: 8),
       const SkillChips(),
       const SizedBox(height: defaultPadding),
-      ElevatedButton.icon(
-        onPressed: () {
-          // TODO: implement download resume logic
-        },
-        icon: const Icon(Icons.download),
-        label: const Text("Download Resume"),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.amber[700],
-          foregroundColor: Colors.black,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        ),
-      )
+      const Align(
+        alignment: Alignment.center,
+        child: Text("Contact Info", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: primaryColor)),
+      ),
+      const SizedBox(height: 8),
+      const Align(
+          alignment: Alignment.center,
+          child: ContactInfo()),
     ];
   }
 }
@@ -119,10 +115,63 @@ class SkillChips extends StatelessWidget {
       runSpacing: 10,
       children: skills
           .map((skill) => Chip(
-        label: Text(skill),
+        label: Text(skill,style: const TextStyle(color: darkColor)),
         backgroundColor: Colors.grey.shade200,
       ))
           .toList(),
+    );
+  }
+}
+
+class ContactInfo extends StatelessWidget {
+  const ContactInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ContactRow(icon: Icons.email, label: 'Email', value: 'ankit.ce2018@gmail.com'),
+        SizedBox(height: 8),
+        ContactRow(icon: Icons.phone, label: 'Phone', value: '+91 8141683686'),
+        SizedBox(height: 8),
+        ContactRow(icon: Icons.link, label: 'Website', value: 'https://ankitportfolio.com'),
+        // Add more contact rows if needed (LinkedIn, GitHub, etc.)
+      ],
+    );
+  }
+}
+
+class ContactRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+
+  const ContactRow({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: primaryColor),
+        const SizedBox(width: 12),
+        Text(
+          '$label: ',
+          style: const TextStyle(fontWeight: FontWeight.bold, color: primaryColor),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
     );
   }
 }

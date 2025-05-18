@@ -15,6 +15,7 @@ class IntroBody extends StatelessWidget {
     return Row(
       children: [
         SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -64,9 +65,15 @@ class IntroBody extends StatelessWidget {
             ],
           ),
         ),
-        const Spacer(),
+        if(!Responsive.isMobile(context))
+          const Spacer(),
+        if(Responsive.isMobile(context))
+          const SizedBox(width: 20),
         if (Responsive.isDesktop(context)) const AnimatedImageContainer(),
-        const Spacer()
+        if(!Responsive.isMobile(context))
+          const Spacer(),
+        if(Responsive.isMobile(context))
+          const SizedBox(width: 20),
       ],
     );
   }
